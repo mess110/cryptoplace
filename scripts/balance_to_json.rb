@@ -78,7 +78,7 @@ class Bitcoin
     }
 
     max_balance = 0.0
-    dominant_color = @colors.sample
+    dominant_color = @colors.first
     @colors.each do |clr|
       acc = account(clr, x, y)
       result[:addresses].push({
