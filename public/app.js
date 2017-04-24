@@ -1,7 +1,7 @@
 $(function () {
   var jsonLoaded = false;
   var mapReady = false;
-  var imageRefreshInterval = 5; // seconds
+  var imageRefreshInterval = 60 * 10; // seconds
   var defaultAnchorY = -34;
   var lastData = undefined;
   var marker = undefined;
