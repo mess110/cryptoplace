@@ -61,7 +61,7 @@ $(function () {
     return "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + address
   };
 
-  popupHtml = function (data) {
+  popupHtml = function () {
     var data = lastData;
     var zeAddr = data.addresses.find(function (e) { return e.color === data.color });
     var result =  "<div style='line-height: 0.7'>";

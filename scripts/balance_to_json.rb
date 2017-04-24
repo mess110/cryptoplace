@@ -144,7 +144,7 @@ FileUtils.mkdir_p base_dir
 
 uri = ENV['PLACED_URI'] || 'http://user:password@127.0.0.1:8332'
 p uri
-bitcoin = Bitcoin.new(uri, 2)
+bitcoin = Bitcoin.new(uri, 100)
 hash = bitcoin.to_hash
 
 path = File.join(base_dir, 'place.json')
