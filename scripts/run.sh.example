@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# load ruby enviornment
+source /home/USER/.rvm/environments/ruby-X.X.X@cryptoplace
+
+# convert to image and json
+ruby /home/USER/cryptoplace/scripts/balance_to_json.rb
+
+# deploy if needed
+# scp /home/USER/cryptoplace/public/api/* USER@IP:DEST

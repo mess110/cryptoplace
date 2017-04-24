@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+
+        <link rel="stylesheet" href="vendor/leaflet.css" />
+        <link rel="stylesheet" href="vendor/jquery-ui.css" media="screen">
+
+        <link rel="stylesheet" href="app.css" />
+
+        <title>crypto-place</title>
+    </head>
+    <body>
+        <div class="curtain">
+            <div>
+                <img src="ajax-loader.gif" alt="loader" />
+                <br />
+                <span id="loadingText">loading</span>
+            </div>
+        </div>
+
+        <img id="image1" class="place" src="blank.png" alt="place" />
+
+        <div class="leaflet-control leaflet-bar leaflet-control-custom">
+            <a class="leaflet-control-zoom-in leaflet-control-button-custom help" href="https://mess110.github.io/blog/cryptoplace/" target="_blank" title="Help" role="button" aria-label="Help">?</a>
+        </div>
+
+        <script type="text/javascript" src="vendor/leaflet.js"></script>
+        <script type="text/javascript" src="vendor/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="vendor/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="vendor/imgViewer2.min.js"></script>
+        <script type="text/javascript" src="vendor/clipboard.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+    </body>
+</html>
