@@ -71,9 +71,12 @@ $(function () {
   };
 
   getRequiredAmount = function (dominantAmount, colorAmount) {
-    var value = dominantAmount - colorAmount
+    var value = dominantAmount - colorAmount;
     if (value < minSend) {
       value = minSend;
+    }
+    if (value === dominantAmount) {
+      value += 0.0001
     }
     return value;
   };
@@ -152,6 +155,7 @@ $(function () {
         marker.addTo(this.map);
 
         var pointInfo = lastData.addresses[lastData.dominant_index];
+        console.log(pixelPos);
         changeColor(pointInfo.color);
 
         var ctrlPanel = $('#ctrlPanel');
