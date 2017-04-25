@@ -8,9 +8,11 @@
 
         <link rel="stylesheet" href="app.css" />
 
-        <title>crypto-place</title>
+        <title>cryptoplace</title>
     </head>
     <body>
+        <img id="image1" class="place" src="blank.png" alt="place" />
+
         <div class="curtain">
             <div>
                 <img src="ajax-loader.gif" alt="loader" />
@@ -19,10 +21,39 @@
             </div>
         </div>
 
-        <img id="image1" class="place" src="blank.png" alt="place" />
+        <div id="ctrlPanel">
+            <div>
+                <p class="helperText"></p>
+            </div>
+            <div>
+                <img class='qrcode' src='' />
+            </div>
+            <div id="addressContainer">
+                <input type='text' id='address' value=''>
+            </div>
+            <div class="palette">
+                <span class='small-cube' style='background-color: #ffffff' onclick="changeColor('ffffff')"></span>
+                <span class='small-cube' style='background-color: #e4e4e4' onclick="changeColor('e4e4e4')"></span>
+                <span class='small-cube' style='background-color: #888888' onclick="changeColor('888888')"></span>
+                <span class='small-cube' style='background-color: #222222' onclick="changeColor('222222')"></span>
+                <span class='small-cube' style='background-color: #ffa7d1' onclick="changeColor('ffa7d1')"></span>
+                <span class='small-cube' style='background-color: #e50000' onclick="changeColor('e50000')"></span>
+                <span class='small-cube' style='background-color: #e59500' onclick="changeColor('e59500')"></span>
+                <span class='small-cube' style='background-color: #a06a42' onclick="changeColor('a06a42')"></span>
+                <br />
+                <span class='small-cube' style='background-color: #e5d900' onclick="changeColor('e5d900')"></span>
+                <span class='small-cube' style='background-color: #94e044' onclick="changeColor('94e044')"></span>
+                <span class='small-cube' style='background-color: #02be01' onclick="changeColor('02be01')"></span>
+                <span class='small-cube' style='background-color: #00d3dd' onclick="changeColor('00d3dd')"></span>
+                <span class='small-cube' style='background-color: #0083c7' onclick="changeColor('0083c7')"></span>
+                <span class='small-cube' style='background-color: #0000ea' onclick="changeColor('0000ea')"></span>
+                <span class='small-cube' style='background-color: #cf6ee4' onclick="changeColor('cf6ee4')"></span>
+                <span class='small-cube' style='background-color: #820080' onclick="changeColor('820080')"></span>
+            </div>
+        </div>
 
         <div class="leaflet-control leaflet-bar leaflet-control-custom">
-            <a class="leaflet-control-zoom-in leaflet-control-button-custom help" href="https://mess110.github.io/blog/cryptoplace/" target="_blank" title="Help" role="button" aria-label="Help">?</a>
+            <a class="leaflet-control-zoom-in leaflet-control-button-custom help" href="https://github.com/mess110/cryptoplace" target="_blank" title="Help" role="button" aria-label="Help">?</a>
         </div>
 
         <script type="text/javascript" src="vendor/leaflet.js"></script>

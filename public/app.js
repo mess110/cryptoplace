@@ -2,10 +2,35 @@ $(function () {
   var jsonLoaded = false;
   var mapReady = false;
   var imageRefreshInterval = 60 * 10; // seconds
-  var defaultAnchorY = -34;
   var lastData = undefined;
   var marker = undefined;
+  var minSend = 0.001;
   json = {};
+
+  isInBottomHalf = function (elm) {
+    var rect = elm.getBoundingClientRect();
+    var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    var viewWidth = Math.max(document.documentElement.clientWidth, window.innerWidth);
+    var upDown = !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+    var leftRight = !(rect.left < 0 || rect.right - viewWidth >= 0);
+    var bottomHalf = rect.top > viewHeight / 2
+    return upDown && leftRight && bottomHalf;
+  }
+
+  adjustBarPos = function (color) {
+    var elem = $('#ctrlPanel');
+    if (isInBottomHalf($('.leaflet-marker-icon')[0])) {
+      elem.css('top', 0);
+      elem.css('bottom', '');
+      $('#ctrlPanel').css('border-top', '0px solid #' + color)
+      $('#ctrlPanel').css('border-bottom', '')
+    } else {
+      elem.css('top', '');
+      elem.css('bottom', 0);
+      $('#ctrlPanel').css('border-top', '')
+      $('#ctrlPanel').css('border-bottom', '2px solid #' + color)
+    }
+  }
 
   setLoading = function (tJsonLoaded, tMapReady) {
     var loadingText = $('#loadingText');
@@ -39,51 +64,44 @@ $(function () {
 
     // init clipboard
     var clipboard = new Clipboard('.btn');
-    clipboard.on('success', function(e) {
-      var trigger = $(e.trigger);
-      if (trigger.text() == 'copied') {
-        trigger.text(trigger.data('clipboard-text'));
-      } else {
-        trigger.text('copied');
-      }
-      e.clearSelection();
+
+    $("input[type='text']").on("click", function () {
+      $(this).select();
     });
+  };
+
+  getRequiredAmount = function (dominantAmount, colorAmount) {
+    var value = dominantAmount - colorAmount
+    if (value < minSend) {
+      value = minSend;
+    }
+    return value;
   };
 
   changeColor = function (color) {
     var zeAddr = lastData.addresses.find(function (e) { return e.color === color});
-    $('.address').text(zeAddr.address);
-    $('.cube').css('background-color', "#" + color);
+    var dominantColor = lastData.addresses[lastData.dominant_index];
+    if (dominantColor.amount === 0) {
+        $('.helperText').text("Select a color and send " + minSend + " BTC to color it");
+    } else {
+      if (dominantColor.color === color) {
+        $('.helperText').text(zeAddr.amount + ' BTC are protecting this color');
+      } else {
+        $('.helperText').text('To change the color send ' + getRequiredAmount(dominantColor.amount, zeAddr.amount) + ' BTC to');
+      }
+    }
+    $('#address').val(zeAddr.address);
     $('.qrcode').attr('src', addressToQr(zeAddr.address));
+    $('#ctrlPanel').css('background', 'linear-gradient(white, white, white, #' + color + ')');
+    adjustBarPos(zeAddr.color);
   };
 
   addressToQr = function (address) {
     return "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + address
   };
 
-  popupHtml = function () {
-    var data = lastData;
-    var zeAddr = data.addresses.find(function (e) { return e.color === data.color });
-    var result =  "<div style='line-height: 0.7'>";
-    result += "  <span class='cube' style='background-color: #" + data.color + "'></span>";
-    result += "  <img class='qrcode' src='" + addressToQr(zeAddr.address) + "' />";
-    result += "  <br />";
-    result += "  <br />";
-    result += "  <br />";
-    result += " <button class='btn address' data-clipboard-text='" + zeAddr.address + "'>" + zeAddr.address + "</button>";
-
-    result += "  <br />";
-    result += "  <br />";
-    result += "  <br />";
-    for (var i = 0, l = json.colors.length; i < l; i++) {
-      var color = json.colors[i];
-      result += "<span class='small-cube', style='background-color: #" + color + "' onclick=\"changeColor('" + color + "')\"></span>";
-    }
-    result += "</div>";
-    return result;
-  }
-
   load = function () {
+
     // Load addresses so we can display them in the UI
     $.getJSON( "api/place.json", function( data ) {
       json = data;
@@ -99,6 +117,9 @@ $(function () {
         this.setZoom(6);
         setLoading(undefined, true);
         this.map.doubleClickZoom.disable();
+        this.map.on('dragstart', function (e) {
+          $('#ctrlPanel').fadeOut();
+        });
       },
       onClick: function( e, pos ) {
         if (pos === null) {
@@ -120,28 +141,22 @@ $(function () {
           marker.remove();
         }
 
-        var anchorY = defaultAnchorY;
-        if (pixelPos.y < 23) {
-          anchorY += 377;
-        }
         marker = L.marker(latlon, {
           'icon': L.icon({
             iconUrl: 'coin.png',
-            iconSize:     [32, 32],
-            iconAnchor:   [16, 32],
-            popupAnchor:  [0, anchorY]
+            iconSize: [16, 16],
+            iconAnchor: [8, 16]
           })
         });
 
-        marker.addTo(this.map).bindPopup(popupHtml());
-        marker.openPopup();
+        marker.addTo(this.map);
 
-        if (anchorY == defaultAnchorY) {
-          $('.leaflet-popup-tip-container').css('bottom', '');
-          $('.leaflet-popup-tip-container').css('transform', '');
-        } else {
-          $('.leaflet-popup-tip-container').css('bottom', 311);
-          $('.leaflet-popup-tip-container').css('transform', 'rotate(180deg)');
+        var pointInfo = lastData.addresses[lastData.dominant_index];
+        changeColor(pointInfo.color);
+
+        var ctrlPanel = $('#ctrlPanel');
+        if (ctrlPanel.css('display') === 'none') {
+          ctrlPanel.css('display', 'flex').hide().fadeIn();
         }
       }
     });
