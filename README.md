@@ -13,6 +13,8 @@ for me to do it. Sorry. Instead, I chose some nice default images. Hope you over
 
 A pixel is colored only once the transaction is confirmed.
 
+BTC donations: 1LCzNB9SmpFcdUhCXadpLzHmWAnwnuAw9k
+
 # Thanks
 
 https://github.com/waynegm/imgViewer2
