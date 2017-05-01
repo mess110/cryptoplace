@@ -1,5 +1,9 @@
 # Cryptoplace
 
+A blog post was written for this repo [http://mess110.github.io/blog/cryptoplace/](http://mess110.github.io/blog/cryptoplace/).
+
+## About
+
 A clone of /r/place backed by the blockchain.
 
 I was really curious about using the blockchain as a database. I guess I found a way.

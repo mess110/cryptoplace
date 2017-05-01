@@ -161,7 +161,11 @@ def write_data bitcoin
   FileUtils.mkdir_p base_dir
 
   default_image = ChunkyPNG::Image.from_file(File.join(base_dir, '..', 'blank.png'))
+
+  start = Time.now
   hash = bitcoin.to_hash(default_image)
+  finish = Time.now
+  puts "Took #{(finish - start).round(2)} seconds"
 
   path = File.join(base_dir, 'place.json')
   File.open(path,'w') { |f| f.write(hash.to_json) }
