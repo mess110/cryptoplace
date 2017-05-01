@@ -1,6 +1,6 @@
 # Cryptoplace
 
-A blog post was written for this repo [http://mess110.github.io/blog/cryptoplace/](http://mess110.github.io/blog/cryptoplace/).
+A blog post was written for this repo [https://mess110.github.io/blog/cryptoplace/](https://mess110.github.io/blog/cryptoplace/).
 
 ## About
 
