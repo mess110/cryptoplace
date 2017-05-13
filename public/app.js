@@ -5,6 +5,8 @@ $(function () {
   var lastData = undefined;
   var marker = undefined;
   var minSend = 0.001;
+  var extraMin = 0.0001;
+  var currency = 'BTC';
   json = {};
 
   isInBottomHalf = function (elm) {
@@ -76,7 +78,7 @@ $(function () {
       value = minSend;
     }
     if (value === dominantAmount) {
-      value += 0.0001
+      value += extraMin;
     }
     return value;
   };
@@ -85,12 +87,12 @@ $(function () {
     var zeAddr = lastData.addresses.find(function (e) { return e.color === color});
     var dominantColor = lastData.addresses[lastData.dominant_index];
     if (dominantColor.amount === 0) {
-        $('.helperText').text("Select a color and send " + minSend + " BTC to color it");
+        $('.helperText').text("Select a color and send " + minSend + " " + currency + " to color it");
     } else {
       if (dominantColor.color === color) {
-        $('.helperText').text(zeAddr.amount + ' BTC are protecting this color');
+        $('.helperText').text(zeAddr.amount + ' ' + currency + ' are protecting this color');
       } else {
-        $('.helperText').text('To change the color send ' + getRequiredAmount(dominantColor.amount, zeAddr.amount) + ' BTC to');
+        $('.helperText').text('To change the color send ' + getRequiredAmount(dominantColor.amount, zeAddr.amount) + ' ' + currency + ' to');
       }
     }
     $('#address').val(zeAddr.address);
