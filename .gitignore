@@ -1,3 +1,4 @@
 wallet/
 scripts/run.sh
 public/api/
+scripts/*.png
