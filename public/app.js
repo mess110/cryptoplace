@@ -7,6 +7,7 @@ $(function () {
   var minSend = 0.001;
   var extraMin = 0.0001;
   var currency = 'BTC';
+  var coinUrl = 'coin.png';
   json = {};
 
   isInBottomHalf = function (elm) {
@@ -148,7 +149,7 @@ $(function () {
 
         marker = L.marker(latlon, {
           'icon': L.icon({
-            iconUrl: 'coin.png',
+            iconUrl: coinUrl,
             iconSize: [16, 16],
             iconAnchor: [8, 16]
           })
