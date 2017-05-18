@@ -53,6 +53,7 @@ class Bitcoin
     @allowed_methods = [
       :getbalance,
       :getinfo,
+      :getblockchaininfo,
       :listaddressgroupings,
       :getnewaddress, # name
       :listaccounts,
