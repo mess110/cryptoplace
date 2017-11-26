@@ -20,4 +20,5 @@ script
     [[ -e $pidfile && ! -d "/proc/$(cat $pidfile)" ]] && rm $pidfile
     [[ -e $pidfile && "$(cat /proc/$(cat $pidfile)/cmdline)" != $cmd* ]] && rm $pidfile
     exec start-stop-daemon --start -c $user --chdir $home --pidfile $pidfile -m --startas $cmd -- -prune=2048 -rpcuser=user -rpcpassword=password -uacomment=UASF-SegWit-BIP148 -daemon
+    exec start-stop-daemon --start -c $user --chdir $home --pidfile $pidfile -m --startas $cmd -- -prune=2048 -rpcport=8332 -rpcallowip=127.0.0.1 -rpcuser=user -rpcpassword=password -daemon
 end script
